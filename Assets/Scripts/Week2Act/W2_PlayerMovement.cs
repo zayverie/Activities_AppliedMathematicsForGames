@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class W2_PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private Transform player;
+    public Transform player;
     public float velocity = 0;
     public float acceleration = 5f;
     public float maxVelocity = 10f;
@@ -46,7 +45,7 @@ public class W2_PlayerMovement : MonoBehaviour
         velocity = Mathf.Clamp(velocity, 0f, maxVelocity);
         player.transform.position += movement * velocity * Time.deltaTime;
 
-        screenBoundaryScript.screenBoundary(player);
+        screenBoundaryScript.screenBoundary(player.transform);
         
         Debug.Log($"Player Position: {player.transform.position}, Velocity: {velocity}");
     }
