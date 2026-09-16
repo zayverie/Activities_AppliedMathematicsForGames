@@ -8,8 +8,8 @@ public class W2_PlayerMovement : MonoBehaviour
     public float acceleration = 5f;
     public float maxVelocity = 10f;
 
-    [Header("Camera Limits")]
-    private Vector2 screenBounds;
+    [SerializeField]
+    private W2_ScreenBoundary screenBoundaryScript;
 
     // Update is called once per frame
     void Update()
@@ -43,18 +43,12 @@ public class W2_PlayerMovement : MonoBehaviour
             velocity -= acceleration * Time.deltaTime; //decelerate when no input is given
         }
 
-        // Clamp the velocity to ensure it doesn't go below 0 or above maxVelocity
-        if (velocity < 0)
-        {
-            velocity = 0;
-        }
-        else if (velocity > maxVelocity)
-        {
-            velocity = maxVelocity;
-        }
-        
+        velocity = Mathf.Clamp(velocity, 0f, maxVelocity);
         player.transform.position += movement * velocity * Time.deltaTime;
 
+        screenBoundaryScript.screenBoundary(player);
+        
         Debug.Log($"Player Position: {player.transform.position}, Velocity: {velocity}");
     }
+
 }
