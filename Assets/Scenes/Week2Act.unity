@@ -272,10 +272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b8b439f3be2c74592db453e2fa33f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::W2_RocketBarrageSystem
-  numberOfRockets: 5
+  rocketCount: 0
   fireInterval: 3
   rocketPrefab: {fileID: 7243094661255378991, guid: 81be2d7f8ea6d2443a3d2ec526dbc41d, type: 3}
-  maxNumberOfRockets: 8
+  maxRocketCount: 8
   playerMovementScript: {fileID: 898601276}
 --- !u!114 &473005389
 MonoBehaviour:
