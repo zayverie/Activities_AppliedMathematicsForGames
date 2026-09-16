@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class W2_RocketBarrageSystem : MonoBehaviour
 {
-    public int numberOfRockets = 5;
-    public float fireInterval = 3f;
+    public int rocketCount = 0;
+    public float fireInterval = 5f;
     public GameObject rocketPrefab;
-    public float maxNumberOfRockets = 8f;
+    public float maxRocketCount = 8f;
 
     public W2_PlayerMovement playerMovementScript;
 
@@ -14,31 +14,21 @@ public class W2_RocketBarrageSystem : MonoBehaviour
     {
         Vector3 firePoint = playerMovementScript.player.transform.position;
 
-        if (Time.time >= fireInterval && numberOfRockets <= maxNumberOfRockets)
+        if (Time.time >= fireInterval)
         {
             SpawnRocket(firePoint);
-            fireInterval = Time.time + 3f;
-        }
-
-        if(numberOfRockets == maxNumberOfRockets)
-        {
-            Debug.Log("Maximum number of rockets reached. Cannot spawn more rockets.");
+            fireInterval = Time.time + 5f; // Reset the fire interval to 5 seconds from the current time
         }
     }
 
     public void SpawnRocket(Vector3 firePoint)
     {
-        float angleSequence = 360 / numberOfRockets;
-        float angle = 0;
+        float angleSequence = 360f / rocketCount;
+        float angle = angleSequence / 4f;
 
-        for (int i = 0; i < numberOfRockets; i++)
+        for (int i = 0; i < rocketCount; i++)
         {
-            float xDirPos = Mathf.Cos(angle * Mathf.Rad2Deg);
-            float zDirPos = Mathf.Sin(angle * Mathf.Rad2Deg);
-
-            // Calculate the spawn position based on the fire point and the calculated x and z offsets
-            Vector3 spawnPosition = new Vector3(firePoint.x + xDirPos, firePoint.y, firePoint.z + zDirPos); 
-            Instantiate(rocketPrefab, spawnPosition, Quaternion.Euler(0, angle, 0));
+            Instantiate(rocketPrefab, firePoint, Quaternion.Euler(0, angle, 0));
 
             angle += angleSequence;
         } 

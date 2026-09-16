@@ -10,6 +10,8 @@ public class W2_PlayerMovement : MonoBehaviour
     [SerializeField]
     private W2_ScreenBoundary screenBoundaryScript;
 
+    private Vector3 lastDirection = Vector3.zero;
+
     // Update is called once per frame
     void Update()
     {
@@ -33,9 +35,14 @@ public class W2_PlayerMovement : MonoBehaviour
             0, 
             verticalInput).normalized;
         
-        if (movement.magnitude > 0 && velocity < maxVelocity)
+        // sqrMagnitude avoids unnecessary square roots
+        if (movement.sqrMagnitude > 0f)
         {
-            velocity += acceleration * Time.deltaTime; //accelerate when input is given
+            lastDirection = movement;
+            if (velocity < maxVelocity)
+            {
+                velocity += acceleration * Time.deltaTime; //accelerate when input is given
+            }
         }
         else
         {
@@ -43,11 +50,11 @@ public class W2_PlayerMovement : MonoBehaviour
         }
 
         velocity = Mathf.Clamp(velocity, 0f, maxVelocity);
-        player.transform.position += movement * velocity * Time.deltaTime;
 
-        screenBoundaryScript.screenBoundary(player.transform);
-        
-        Debug.Log($"Player Position: {player.transform.position}, Velocity: {velocity}");
+        if (velocity > 0f)
+        {
+            player.transform.position += lastDirection * velocity * Time.deltaTime;
+            screenBoundaryScript.screenBoundary(player.transform);
+        }
     }
-
 }

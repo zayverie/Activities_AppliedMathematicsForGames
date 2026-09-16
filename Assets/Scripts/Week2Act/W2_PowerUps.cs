@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class W2_PowerUps : MonoBehaviour
 {
     public W2_PlayerMovement playerMovementScript;
@@ -16,18 +15,13 @@ public class W2_PowerUps : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(rocketBarrageSystemScript.numberOfRockets < rocketBarrageSystemScript.maxNumberOfRockets)
+        if(rocketBarrageSystemScript.rocketCount < rocketBarrageSystemScript.maxRocketCount)
         {
-            if((this.gameObject.transform.position - playerMovementScript.player.position).magnitude < 1.5f)
+            if((this.gameObject.transform.position - playerMovementScript.player.position).sqrMagnitude < 2.25f)
             {
-                rocketBarrageSystemScript.numberOfRockets += 1;
+                rocketBarrageSystemScript.rocketCount += 1;
                 Destroy(this.gameObject);
             }     
         }
-        else
-        {
-            Debug.Log("Maximum number of rockets reached. Cannot pick up more power-ups.");
-        }
-        
     }
 }
