@@ -9,13 +9,7 @@ public class W3_GameManager : MonoBehaviour
     public W3_Shotgun shotgunScript;
     public W3_TurretRotation turretRotationScript;
     public GameObject goal;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         WinCondition();
@@ -25,14 +19,17 @@ public class W3_GameManager : MonoBehaviour
     {
         if (playerScript != null && uiManagerScript != null && goal != null)
         {
-            if ((playerScript.transform.position - goal.transform.position).magnitude < 1f)
+            if (Vector3.Distance(playerScript.transform.position, goal.transform.position) < 1f)
             {
                 uiManagerScript.WinGame();
-                sniperScript.enabled = false;
-                flameShooterScript.enabled = false;
-                shotgunScript.enabled = false;
-                turretRotationScript.enabled = false;
+
+                if (sniperScript != null) sniperScript.enabled = false;
+                if (flameShooterScript != null) flameShooterScript.enabled = false;
+                if (shotgunScript != null) shotgunScript.enabled = false;
+                if (turretRotationScript != null) turretRotationScript.enabled = false;
+                
                 playerScript.enabled = false;
+                enabled = false;
             }
         }
     }

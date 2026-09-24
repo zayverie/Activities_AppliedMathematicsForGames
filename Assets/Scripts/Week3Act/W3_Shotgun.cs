@@ -13,13 +13,11 @@ public class W3_Shotgun : MonoBehaviour
 
     private float nextFireTime;
     private LineRenderer lr;
-    private float halfConeAngle;
 
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
         lr.positionCount = 3;
-        halfConeAngle = coneAngle * 0.5f;
     }
 
     void Start()
@@ -33,8 +31,6 @@ public class W3_Shotgun : MonoBehaviour
 
     void Update()
     {
-        DrawCone();
-
         if (player != null && IsInCone(player.position))
         {
             if (Time.time >= nextFireTime)
@@ -43,6 +39,11 @@ public class W3_Shotgun : MonoBehaviour
                 nextFireTime = Time.time + fireRate;
             }
         }
+    }
+
+    void LateUpdate()
+    {
+        DrawCone();
     }
 
     public bool IsInCone(Vector3 targetPosition)
@@ -60,11 +61,13 @@ public class W3_Shotgun : MonoBehaviour
 
         return delta <= coneAngle / 2f;
     }
+
     public void DrawCone()
     {
+        float halfCone = coneAngle * 0.5f;
         Vector3 origin = transform.position;
-        Vector3 leftDir = Quaternion.Euler(0, -halfConeAngle, 0) * transform.forward;
-        Vector3 rightDir = Quaternion.Euler(0, halfConeAngle, 0) * transform.forward;
+        Vector3 leftDir = Quaternion.Euler(0, -halfCone, 0) * transform.forward;
+        Vector3 rightDir = Quaternion.Euler(0, halfCone, 0) * transform.forward;
 
         lr.SetPosition(0, origin);
         lr.SetPosition(1, origin + leftDir * range);
@@ -80,7 +83,14 @@ public class W3_Shotgun : MonoBehaviour
         for (int i = 0; i < pelletCount; i++)
         {
             Quaternion rot = transform.rotation * Quaternion.Euler(0, startAngle, 0);
-            Instantiate(bulletPrefab, firePoint, rot);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint, rot);
+
+            W3_ShotgunBullet bulletScript = bullet.GetComponent<W3_ShotgunBullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.shotgunScript = this;
+            }
+
             startAngle += angleSequence;
         }
     }
