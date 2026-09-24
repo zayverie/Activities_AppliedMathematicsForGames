@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class W3_SniperBullet : MonoBehaviour
+public class W3_ShotgunBullet : MonoBehaviour
 {
     public Transform player;
-    public W3_Sniper sniperScript;
     public W3_SceneRestarter sceneRestarterScript;
 
-    [SerializeField] private float speed = 50f;
+    [SerializeField] private float speed = 18f;
     [SerializeField] private float hitArea = 1.5f;
-    [SerializeField] private float bulletLifetime = 5f;
+    [SerializeField] private float bulletLifetime = 3f;
+    public W3_Shotgun shotgunScript;
 
     void Start()
     {
-        if (sniperScript == null)
+        if(shotgunScript == null)
         {
-            sniperScript = FindAnyObjectByType<W3_Sniper>();
+            shotgunScript = FindAnyObjectByType<W3_Shotgun>();
         }
 
         if (player == null)
@@ -30,27 +30,25 @@ public class W3_SniperBullet : MonoBehaviour
         {
             sceneRestarterScript = FindAnyObjectByType<W3_SceneRestarter>();
         }
-
         Destroy(gameObject, bulletLifetime);
     }
 
     void Update()
     {
-        transform.Translate(Vector3.up * (speed * Time.deltaTime));
-        SniperHitCheck();
+        transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+        PelletHitCheck();
     }
 
-    private void SniperHitCheck()
+    private void PelletHitCheck()
     {
-        if (sniperScript != null && !sniperScript.InSight(transform.position))
+        if (shotgunScript != null && !shotgunScript.IsInCone(transform.position))
         {
             Destroy(gameObject);
             return;
         }
-
-        if (player != null && (transform.position - player.position).sqrMagnitude <= hitArea)
+        if (player != null && Vector3.Distance(transform.position, player.position) <= hitArea)
         {
-            Debug.Log("Player hit by sniper projectile!");
+            Debug.Log("Player hit by shotgun pellet!");
             Destroy(gameObject);
 
             if (sceneRestarterScript != null)

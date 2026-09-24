@@ -6,7 +6,7 @@ public class W3_Flame : MonoBehaviour
     public Transform player;
     public W3_FlameShooter flameShooterScript;
     public W3_SceneRestarter sceneRestarterScript;
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 7f;
     [SerializeField] private float hitArea = 1.5f;
     [SerializeField] private float flameLifetime = 5f;
 

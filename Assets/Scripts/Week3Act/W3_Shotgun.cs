@@ -1,15 +1,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class W3_FlameShooter : MonoBehaviour
+public class W3_Shotgun : MonoBehaviour
 {
-    [SerializeField] private float range = 5f;
-    [SerializeField] private float coneAngle = 45f;
-    [SerializeField] private float fireRate = 1f;
-    [SerializeField] private int flameCount = 5;
+    [SerializeField] private float range = 8f;
+    [SerializeField] private float coneAngle = 60f;
+    [SerializeField] private float fireRate = 2f; 
+    [SerializeField] private int pelletCount = 5;
 
-    public GameObject flamePrefab;
-    public W3_Player playerScript;
+    public GameObject bulletPrefab;
+    public Transform player;
 
     private float nextFireTime;
     private LineRenderer lr;
@@ -24,18 +24,22 @@ public class W3_FlameShooter : MonoBehaviour
 
     void Start()
     {
-        playerScript = FindAnyObjectByType<W3_Player>();
+        if (player == null)
+        {
+            W3_Player found = FindAnyObjectByType<W3_Player>();
+            if (found != null) player = found.transform;
+        }
     }
 
     void Update()
     {
         DrawCone();
 
-        if (playerScript != null && IsInCone(playerScript.transform.position))
+        if (player != null && IsInCone(player.position))
         {
             if (Time.time >= nextFireTime)
             {
-                FireFlame();
+                FireShotgun();
                 nextFireTime = Time.time + fireRate;
             }
         }
@@ -56,7 +60,6 @@ public class W3_FlameShooter : MonoBehaviour
 
         return delta <= coneAngle / 2f;
     }
-
     public void DrawCone()
     {
         Vector3 origin = transform.position;
@@ -68,21 +71,17 @@ public class W3_FlameShooter : MonoBehaviour
         lr.SetPosition(2, origin + rightDir * range);
     }
 
-    public void FireFlame()
+    public void FireShotgun()
     {
         Vector3 firePoint = transform.position + transform.forward * 1f;
+        float angleSequence = coneAngle / pelletCount;
+        float startAngle = -coneAngle / 2f;
 
-        float angleSequence = coneAngle / flameCount;
-        float angle = -coneAngle / 2f;
-
-        for (int i = 0; i < flameCount; i++)
+        for (int i = 0; i < pelletCount; i++)
         {
-            Quaternion rot = transform.rotation * Quaternion.Euler(0, angle, 0);
-
-            GameObject flame = Instantiate(flamePrefab, firePoint, rot);
-            flame.GetComponent<W3_Flame>().flameShooterScript = this;
-
-            angle += angleSequence;
+            Quaternion rot = transform.rotation * Quaternion.Euler(0, startAngle, 0);
+            Instantiate(bulletPrefab, firePoint, rot);
+            startAngle += angleSequence;
         }
     }
 }

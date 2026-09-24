@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Atan : MonoBehaviour
+public class W3_TurretRotation : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private Transform[] shooters;

@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class W3_Sniper : MonoBehaviour
 {
-    public float range = 10f;
+    public float range = 20f;
     public Transform player;
     public GameObject bulletPrefab;
     public W3_Player playerScript;
@@ -51,7 +51,9 @@ public class W3_Sniper : MonoBehaviour
     public void FireSniperBullet()
     {
         Vector3 firePoint = transform.position + transform.forward * 1f;
-        GameObject sniperBullet = Instantiate(bulletPrefab, firePoint, transform.rotation);
+        
+        Quaternion bulletRotation = transform.rotation * Quaternion.Euler(90f, 0f, 0f);
+        GameObject sniperBullet = Instantiate(bulletPrefab, firePoint, bulletRotation);
         
         W3_SniperBullet bulletScript = sniperBullet.GetComponent<W3_SniperBullet>();
         if (bulletScript != null)
