@@ -15,7 +15,7 @@ public class Atan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // rotateToPlayer();
+        rotateToPlayer();
         
     }
     public void rotateToPlayer()

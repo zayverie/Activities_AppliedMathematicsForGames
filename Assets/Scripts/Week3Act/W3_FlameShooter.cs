@@ -46,7 +46,7 @@ public class W3_FlameShooter : MonoBehaviour
         Vector3 dir = targetPosition - transform.position;
         dir.y = 0f; // Restrict checks to XZ ground plane
 
-        if (dir.sqrMagnitude > range * range) return false;
+        if (dir.sqrMagnitude > range) return false;
 
         return Vector3.Angle(transform.forward, dir) <= halfConeAngle;
     }
@@ -71,11 +71,10 @@ public class W3_FlameShooter : MonoBehaviour
 
         for (int i = 0; i < flameCount; i++)
         {
-            // Multiply shooter's rotation with the local offset angle
             Quaternion rot = transform.rotation * Quaternion.Euler(0, angle, 0);
 
             GameObject flame = Instantiate(flamePrefab, firePoint, rot);
-            flame.GetComponent<W3_Projectile>().flameShooterScript = this;
+            flame.GetComponent<W3_Flame>().flameShooterScript = this;
 
             angle += angleSequence;
         }
