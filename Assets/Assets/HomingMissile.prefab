@@ -135,6 +135,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb33ca9e18b395341b3a32a03dbc77b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HomingMissiles
-  lifetime: 5
-  speed: 10
-  target: {fileID: 0}
+  speed: 12
+  playerScript: {fileID: 0}

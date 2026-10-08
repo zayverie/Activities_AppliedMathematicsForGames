@@ -3,17 +3,27 @@ using UnityEngine;
 public class W5_Player : MonoBehaviour
 {
     public float forwardSpeed = 5f;
-    public float strafeSpeed = 5f;
+    public float strafeSpeed = 12f;
     public float health = 5f;
-    public HomingMissiles homingMissilesScript;
-
+    public W5_UIManager uiManagerScript;
+    private HomingMissiles homingMissilesScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (uiManagerScript != null)
+        {
+            uiManagerScript.UpdateHealthUI();
+        }
+
         if (homingMissilesScript == null)
         {
             homingMissilesScript = FindAnyObjectByType<HomingMissiles>();
+        }
+
+        if (uiManagerScript == null)
+        {
+            uiManagerScript = FindAnyObjectByType<W5_UIManager>();
         }
     }
 
@@ -33,6 +43,11 @@ public class W5_Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+
+        if (uiManagerScript != null)
+        {
+            uiManagerScript.UpdateHealthUI();
+        }
         Debug.Log("Player hit! Health: " + health);
     }
 }

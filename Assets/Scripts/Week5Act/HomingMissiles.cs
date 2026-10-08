@@ -2,19 +2,17 @@ using UnityEngine;
 
 public class HomingMissiles : MonoBehaviour
 {
-    public float lifetime = 5f;
+    private float lifetime = 5f;
     public float speed = 10f;
     public W5_Player playerScript;
-    public float turnSpeed = 5f;
+    private float turnSpeed = 2.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (playerScript == null)
         {
-            playerScript = GameObject.FindAnyObjectByType<W5_Player>();
+            playerScript = FindAnyObjectByType<W5_Player>();
         }
-
-        
     }
 
     // Update is called once per frame
@@ -37,7 +35,7 @@ public class HomingMissiles : MonoBehaviour
     {
         Vector3 direction = (playerScript.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
     }
 
     public bool HitTarget()

@@ -3,13 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class W5_GameManager : MonoBehaviour
 {
-    public W5_Player playerScript;
+    private W5_Player playerScript;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (playerScript == null)
         {
-            playerScript = GameObject.FindAnyObjectByType<W5_Player>();
+            playerScript = FindAnyObjectByType<W5_Player>();
         }
     }
 
