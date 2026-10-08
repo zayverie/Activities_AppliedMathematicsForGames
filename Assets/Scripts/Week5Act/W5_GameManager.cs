@@ -4,10 +4,12 @@ using UnityEngine.SceneManagement;
 public class W5_GameManager : MonoBehaviour
 {
     private W5_Player playerScript;
+    [HideInInspector] public float zeroTime = 0f; 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        zeroTime = Time.time;
         if (playerScript == null)
         {
             playerScript = FindAnyObjectByType<W5_Player>();
@@ -19,8 +21,13 @@ public class W5_GameManager : MonoBehaviour
     {
         if (playerScript != null && playerScript.health <= 0f)
         {
-            Debug.Log("Game Over!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            RestartGame();
         }
+    }
+
+    public bool RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        return true;    
     }
 }

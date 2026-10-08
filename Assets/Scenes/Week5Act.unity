@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297c6d7e15dcc9c40bad9fe08fcfa0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::W5_GameManager
+  zeroTime: 0
 --- !u!4 &28515532
 Transform:
   m_ObjectHideFlags: 0
@@ -929,6 +930,7 @@ MonoBehaviour:
   healthUI: {fileID: 1266389677}
   timeUI: {fileID: 45741888}
   playerScript: {fileID: 318100231}
+  gameManagerScript: {fileID: 28515531}
 --- !u!4 &1351526270
 Transform:
   m_ObjectHideFlags: 0

@@ -6,8 +6,21 @@ public class W5_UIManager : MonoBehaviour
 {
     public GameObject healthUI;
     public GameObject timeUI;
-    public W5_Player playerScript;
+    [HideInInspector] public W5_Player playerScript;
+    [HideInInspector] public W5_GameManager gameManagerScript;
     
+    void Start()
+    {
+        if (playerScript == null)
+        {
+            playerScript = FindAnyObjectByType<W5_Player>();
+        }
+
+        if (gameManagerScript == null)
+        {
+            gameManagerScript = FindAnyObjectByType<W5_GameManager>();
+        }
+    }
     void Update()
     {
         if (timeUI != null)
@@ -15,7 +28,7 @@ public class W5_UIManager : MonoBehaviour
             TextMeshProUGUI timeText = timeUI.GetComponent<TextMeshProUGUI>();
             if (timeText != null)
             {
-                timeText.text = "Time: " + Time.time.ToString("F2") + "s";
+                timeText.text = "Time: " + (Time.time - gameManagerScript.zeroTime).ToString("F2") + "s";
             }
         }
     }
