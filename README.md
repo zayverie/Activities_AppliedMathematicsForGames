@@ -10,3 +10,4 @@ A top-down 3D survival evasion game where the player must reach the goal using 8
 ----------------------------------------------------------------------------------------------
 ## Week 4 - (in another repository)
 ## Week 5 - https://drive.google.com/file/d/1r9P9UwO1zfShsvBB3d9NxQoixBrz7rzp/view?usp=drive_link
+## Week 8 - https://drive.google.com/file/d/19uhdlCzmmz1a_ncQSf-ScVeyf3kL-sd4/view?usp=drive_link
