@@ -40,7 +40,6 @@ public class W8_Player : MonoBehaviour
             0f);
 
         transform.position += playerDirection.normalized * velocity * Time.fixedDeltaTime;
-        
 
         AABBCollider collider = GetComponent<AABBCollider>();
         collider.FixedUpdate();
@@ -52,7 +51,6 @@ public class W8_Player : MonoBehaviour
             isGrounded = false;
             isCollidingWithObstacle = false;
         }
-        isGrounded = false;
         isCollidingWithObstacle = false;
         _jumpPressed = false;
         verticalVelocity -= gravity * Time.fixedDeltaTime;
