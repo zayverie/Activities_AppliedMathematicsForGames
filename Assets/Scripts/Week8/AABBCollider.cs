@@ -61,7 +61,7 @@ public class AABBCollider : MonoBehaviour
                 }
             }
 
-            if (other.gameObject.name == "Obstacle")
+            if (other.gameObject.name.StartsWith("Obstacle"))
             {
                 if (this.gameObject == W8_Player.Instance.gameObject)
                 {
